@@ -54,11 +54,38 @@ Dynamic routing protocols can be divided into two main categories:
 + It uses the **metric** value of the routes to determine which is best. A lower metric = better
 + Each routing protocol uses a different metric to determine which route is best
 
-  * If a router learns two (or more ) routes via the **same routing protocol** to the same **destination** (same network address, same subnet mask) with the **same metric**, both will      be added to the routing table. Traffic will be load-balanced over both routes. * 
+  *If a router learns two (or more ) routes via the **same routing protocol** to the same **destination** (same network address, same subnet mask) with the **same metric**, both will      be added to the routing table. Traffic will be load-balanced over both routes.* <- **ECMP (equal-cost multi-path)**
 
+## Dynamic Routing Protocol Metrics - IGP
+* **RIP -> metric = Hop Count:** Each router in the path counts as one hop. The total metric is the total number of hops to the destination. (Links of all speeds are equal).
+* **EIGRP -> metric = Based on bandwith and delay:** Complex formula that can take int oaccount many values. By default, the bandwith of the **slowest link in the route** and the delay of all links in the route are used.
+* **OSPF -> metric = cost:** The cost of each link is calculated based on bandwith. The total metric is the total cost of each link in the route.
+* **IS-IS -> metric = cost:** The total metric is the total cost of each link in the route. The cost of each link is **not** automatically calculated by default. All links have a cost of 10 by default.
 
+## Administrative Distance
++ In most cases a company will only use a single IGP (usually OSPF or EIGRP).
++ However, in some rare cases they might use two. For example: if two companies connect their networks to share information, two different routing protocls might be in use.
++ Metric is used to compare routes **learned via the same routing protocol**.
++ Different routing protocols usually use totally different metrics, so they cannot be compared.
++ For example, and OSPF route to 192.168.4.0/24 might have a metric of 30, while an EIGRP route to the same destination might have a metric of 33280.
++ The administrative distance (AD) is used to determine which routing protocol is preferred.
++ A lower AD is preferred and indicates that the routing protocol is considered trutworthy (more likely to reflect good routes).
 
+ 
 
+| Rute protocol/type | AD |
+| ------------- | ------------- |
+| directly connected  | 0 |
+| static route  | 1  |
+| External BGP  | 20  |
+| EIGRP  | 90  |
+| IGRP  | 100  |
+| OSPF  | 110  |
+| IS_IS | 115  |
+| RIP | 120  |
+| EIGRP  | 170  |
+| Internal BGP  | 200  |
+| unusable route  | 255  |
 
 
 
