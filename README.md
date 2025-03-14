@@ -87,7 +87,14 @@ Dynamic routing protocols can be divided into two main categories:
 | Internal BGP  | 200  |
 | unusable route  | 255  |
 
+  *If the administrative distance is 255, the router does not believe the source of that route and does not install the route in the routing table* 
 
+**Change the AD of a routing protocol**: R1(config)#ip route 'destination' 'subnet mask' 'next-hop' 'AD'
+
+## Floating Satic Routes
++ By changing the AD of a static route, you can make it less preferred than routes learned by a dynamic routing protocol to the same destination.
++ This is called a **floating static route**
++ The route will be inactive (not in the routing table) unless the route learned by the dynamic routing protocol is removed (for example, the router stops advertising it for some reeason, or an interface failure causes an adjacency with a neighbor to be lost). 
 
   
   
